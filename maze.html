@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+    <title>Maze</title>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+        <header class="sticky row">
+                <div class="col-sm col-lg-10 col-lg-offset-1">
+                    <a href="index.html" role="button">zzild's<span class="icon-home"></span></a>
+                    <a href="#" role="button">Maze</a>
+                    <a href="https://github.com/zzild/" role="button">Github</a>
+                    <a href="https://en.wikiquote.org/wiki/Special:Random" role="button">Random</a>
+                </div>
+            </header>
+    <h1>Automatic Maze Creation</h1>
+    <h2>Aldous Broder</h2>
+    <p>
+        The <i>Aldous-Broder algorithm</i> is an algorithm for generating <b>uniform spanning trees of a graph</b>.
+        Uniform Spanning Tree means <i>a maze generated in such a way that it was randomly selected
+        from a list of every possible maze to be generated</i>.
+        A maze generation algorithm that generates a uniform spanning tree is the only maze generation algorithm that
+        could, theoretically, generate every maze possible.
+        They're probabilistically superior to most other maze generation algorithms, but that property makes these
+        algorithms <i>much more inefficient</i> than the standard ones.
+    </p>
+    <h3>How the algorithm works</h3>
+    <p>
+        It starts by picking a random cell in the maze. Then, it jumps to a random neighbor of that cell. If that cell
+        has not yet been visited, it connects it to the previous cell and marks it as visited. Then, it jumps to another
+        random neighbor and does the same thing, continuously jumping randomly until all cells have been visited, at
+        which point the algorithm terminates. This could take a very long time..
+    </p>
+    <h3>Result</h3>
+    <p>
+        And now we show a dynamically created maze. Reload the page to see another one.
+    </p>
+    <form>
+            <div class="row">
+                <div class="col-sm">
+                    <label for="rows">Rows</label>
+                    <input type="number" name="rows" id="rows" min="1" max="50" value="20"/>
+                </div>
+                <div class="col-sm">
+                    <label for="columns">Columns</label>
+                    <input type="number" name="columns" id="columns" min="1" max="100" value="40"/>
+                </div>
+                <div class="col-sm">
+                    <input class="primary" type="submit" value="Rebuild">
+                </div>
+            </div>
+    </form>
+    <hr/>
+    <div id="maze">
+    </div>
+    <script src="js/maze_05.js"></script>
+    <script type="text/javascript">
+        console.log('now we run JavaScript..');
+        let rows = '20';                                        // default value
+        let columns = '40';                                     // default value
+        let url = new URL(document.URL);                        // get current URL
+        let search_params = new URLSearchParams(url.search);    // parse current url parameters
+        if (search_params.has('rows')) {
+            rows = search_params.get('rows');                   // set new value for rows
+        }
+        if (search_params.has('columns')) {
+            columns = search_params.get('columns');             // set new value for columns
+        }
+        console.log('rows: '+ rows);
+        console.log('columns: '+ columns);
+        document.getElementById("rows").value = rows; 
+        document.getElementById("columns").value = columns;
+        let maze = createAldousBroderMaze(rows, columns);
+        printMaze(maze);
+        document.getElementById("maze").innerHTML = "<pre>" + toString(maze) + "</pre>";
+    </script>
+</body>
+</html>
