@@ -156,7 +156,7 @@ function createAldousBroderMaze(rows, columns) {
     let s = initializeMaze(rows, columns);
     let i = 0; // current row
     let j = 0; // current column
-    for (let n = 0; n < 10000; n++) {
+    for (let n = 0; n < 1000000; n++) {
         // TODO randomly choose a value from {0, 1, 2, 3}
         let choice = Math.floor(Math.random()*4);
         switch (choice) {
